@@ -4,452 +4,354 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saldão Minis - Rifa Hot Wheels</title>
+    <!-- Tailwind CSS para design moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
-        .hw-gradient {
-            background: linear-gradient(135deg, #1e3a8a 0%, #ea580c 100%);
+        .numero-btn {
+            transition: all 0.2s ease;
         }
-        .saldao-logo-container {
-            background-color: #15803d;
-            border: 3px solid #facc15;
-            position: relative;
-            overflow: hidden;
-        }
-        .saldao-roda-bg {
-            position: absolute;
-            inset: -4px;
-            border: 4px dashed rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            animation: spin 20s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
         }
     </style>
-    <script>
-        // ==========================================
-        // CONFIGURAÇÕES GERAIS DA RIFA (Fácil alteração)
-        // ==========================================
-        const CONFIG = {
-            precoUnitario: 1.25,
-            qtdPacote: 10,
-            precoPacote: 10.00,
-            totalNumeros: 100,
-            whatsappContato: "5511999999999" // Substitua pelo seu WhatsApp com DDD
-        };
-    </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Cabeçalho Principal -->
-    <header class="hw-gradient shadow-2xl border-b-4 border-yellow-400 py-5 px-4 text-center relative overflow-hidden">
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
-            
-            <!-- Lado Esquerdo: Logo Saldão Minis com Roda -->
+    <!-- Cabeçalho Hot Wheels / Saldão Minis -->
+    <header class="bg-gradient-to-r from-red-700 via-amber-600 to-red-800 text-white py-6 shadow-lg border-b-4 border-yellow-400">
+        <div class="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
-                <div class="saldao-logo-container rounded-full w-20 h-20 md:w-24 md:h-24 flex items-center justify-center shadow-2xl shrink-0">
-                    <div class="saldao-roda-bg"></div>
-                    <div class="text-center z-10 bg-emerald-800/90 w-16 h-16 md:w-20 md:h-20 rounded-full flex flex-col items-center justify-center border border-white/30 shadow-inner">
-                        <span class="text-white font-black text-xs md:text-sm tracking-tight block drop-shadow-md leading-none">Saldão</span>
-                        <span class="text-yellow-300 font-extrabold text-[10px] md:text-xs uppercase block tracking-wider mt-0.5">minis</span>
-                    </div>
+                <!-- Logotipo do Saldão Minis -->
+                <div class="w-16 h-16 bg-white rounded-full p-1 shadow-md border-2 border-yellow-300 overflow-hidden flex items-center justify-center">
+                    <img src="0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg" alt="Logo Saldão Minis" class="w-full h-full object-cover rounded-full">
                 </div>
-                <div class="text-left">
-                    <span class="bg-yellow-400 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider inline-block mb-1">
-                        <i class="fa-solid fa-fire text-red-600 mr-1"></i> Oficial
-                    </span>
-                    <h1 id="view-titulo" class="text-xl md:text-3xl font-black uppercase tracking-wide text-yellow-300 drop-shadow">
-                        Coleção Exclusiva Hot Wheels
-                    </h1>
+                <div>
+                    <h1 class="text-3xl font-black tracking-wider uppercase italic text-yellow-300 drop-shadow-md">Saldão Minis</h1>
+                    <p class="text-xs sm:text-sm text-gray-100 font-medium">Rifa Oficial Hot Wheels & Colecionáveis</p>
                 </div>
             </div>
-
-            <!-- Lado Direito Superior: Novo Logo Hot Wheels "SALDÃO MINI" + Abas -->
-            <div class="flex flex-col md:items-end gap-3">
-                <div class="bg-white/95 px-3 py-1.5 rounded-xl shadow-lg border-2 border-yellow-400">
-                    <!-- Novo logotipo Hot Wheels com o texto "SALDÃO MINI" do anexo -->
-                    <svg viewBox="0 0 600 180" class="h-9 md:h-12 w-auto drop-shadow-md" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="hwRed" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="#ff2222"/>
-                                <stop offset="100%" stop-color="#cc0000"/>
-                            </linearGradient>
-                            <linearGradient id="hwYellow" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="#ffea00"/>
-                                <stop offset="100%" stop-color="#ffbb00"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- Silhueta da flama Hot Wheels -->
-                        <path d="M20,110 C40,90 70,115 95,95 C120,75 130,40 160,50 C190,60 185,115 210,105 C235,95 245,70 270,75 C295,80 305,120 330,110 C355,100 370,60 400,65 C430,70 440,115 470,105 C500,95 530,50 560,70 C575,80 585,105 595,125 C580,145 540,165 490,160 C420,153 300,165 200,160 C110,155 50,135 20,110 Z" fill="url(#hwRed)" stroke="#a00" stroke-width="4"/>
-                        <!-- Texto estilizado em amarelo com borda vermelha -->
-                        <text x="35" y="132" font-family="Impact, Arial Black, sans-serif" font-size="62" font-style="italic" font-weight="900" fill="url(#hwYellow)" stroke="#b00" stroke-width="2.5" letter-spacing="1">SALDÃO MINI</text>
-                        <!-- Símbolo de marca registrada -->
-                        <circle cx="580" cy="115" r="7" fill="url(#hwRed)" stroke="#ffea00" stroke-width="1.5"/>
-                        <text x="576" y="119" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ffea00">®</text>
-                    </svg>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="mudarAba('rifa')" id="btn-tab-rifa" class="bg-yellow-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-xl text-xs uppercase shadow transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-ticket"></i> Rifa
-                    </button>
-                    <button onclick="mudarAba('admin')" id="btn-tab-admin" class="bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold px-3.5 py-1.5 rounded-xl text-xs uppercase shadow transition flex items-center gap-1.5 border border-slate-700">
-                        <i class="fa-solid fa-lock"></i> Admin
-                    </button>
-                </div>
-            </div>
-
+            <!-- Botão de Acesso Admin -->
+            <button onclick="abrirLoginAdmin()" class="bg-black text-yellow-400 border border-yellow-400 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition shadow">
+                Painel Admin
+            </button>
         </div>
     </header>
 
-    <!-- CONTEÚDO: ABA DA RIFA -->
-    <main id="aba-rifa" class="max-w-5xl mx-auto p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl flex-grow">
         
-        <!-- Coluna Esquerda: Prêmios, Preços e Carrinho -->
-        <div class="md:col-span-1 space-y-4">
+        <!-- Vitrine de Fotos do Prêmio (Até 5 Fotos) -->
+        <div class="bg-slate-800/80 p-4 rounded-xl shadow-lg mb-6 border border-slate-700">
+            <h3 class="text-sm font-bold text-yellow-400 uppercase mb-3 text-center tracking-wider">Miniaturas em Destaque (Prêmio)</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="galeria-fotos">
+                <!-- As 5 fotos dinâmicas aparecem aqui -->
+                <div class="bg-slate-900 rounded-lg h-24 flex items-center justify-center border border-slate-700 overflow-hidden">
+                    <img src="0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg" alt="Foto 1" class="w-full h-full object-cover">
+                </div>
+                <div class="bg-slate-900 rounded-lg h-24 flex items-center justify-center border border-slate-700 overflow-hidden">
+                    <img src="0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg" alt="Foto 2" class="w-full h-full object-cover">
+                </div>
+                <div class="bg-slate-900 rounded-lg h-24 flex items-center justify-center border border-slate-700 overflow-hidden">
+                    <img src="0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg" alt="Foto 3" class="w-full h-full object-cover">
+                </div>
+                <div class="bg-slate-900 rounded-lg h-24 flex items-center justify-center border border-slate-700 overflow-hidden">
+                    <img src="0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg" alt="Foto 4" class="w-full h-full object-cover">
+                </div>
+                <div class="bg-slate-900 rounded-lg h-24 flex items-center justify-center border border-slate-700 overflow-hidden">
+                    <img src="0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg" alt="Foto 5" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- Instruções -->
+        <div class="bg-slate-800 p-4 rounded-xl shadow-sm mb-6 border border-slate-700 text-sm">
+            <p class="font-bold text-yellow-400 mb-1">Passo a passo para garantir seu número:</p>
+            <ol class="list-decimal list-inside space-y-1 text-slate-300">
+                <li>Escolha um número disponível na tabela abaixo (verde).</li>
+                <li>Preencha seu Nome e WhatsApp.</li>
+                <li>Faça o Pix usando a chave oficial e envie o comprovante no WhatsApp.</li>
+            </ol>
+        </div>
+
+        <!-- Grade de Números (1 a 100) -->
+        <div class="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-white">Escolha seu Número</h2>
+                <div class="flex gap-4 text-xs font-semibold">
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 bg-emerald-500 rounded-full inline-block"></span> Disponível</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 bg-rose-600 rounded-full inline-block"></span> Ocupado</span>
+                </div>
+            </div>
+
+            <!-- Grid gerado via script -->
+            <div id="grid-numeros" class="grid grid-cols-5 sm:grid-cols-10 gap-2">
+                <!-- Números injetados via JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Reserva / Pagamento -->
+    <div id="modal" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative text-slate-100">
+            <h3 class="text-xl font-bold mb-2">Número selecionado: <span id="modal-num" class="text-yellow-400"></span></h3>
+            <p class="text-sm text-slate-400 mb-4">Preencha seus dados para garantir sua participação.</p>
             
-            <!-- Vitrine de Fotos dos Prêmios -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
-                <h3 class="text-sm font-bold text-yellow-400 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-camera"></i> Prêmios em Destaque
-                </h3>
-                <div id="view-fotos-container" class="grid grid-cols-2 gap-2">
-                    <!-- Preenchido dinamicamente -->
+            <form id="form-participante" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Seu Nome Completo</label>
+                    <input type="text" id="nome" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none">
                 </div>
-            </div>
-
-            <!-- Tabela de Preços -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
-                <h3 class="text-sm font-bold text-yellow-400 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-tag"></i> Tabela de Valores
-                </h3>
-                <div class="text-xs space-y-1.5 text-slate-300">
-                    <div class="flex justify-between"><span>1 Número:</span> <strong class="text-yellow-400">R$ 1,25</strong></div>
-                    <div class="flex justify-between border-t border-slate-800 pt-1.5"><span>10 Números:</span> <strong class="text-green-400">R$ 10,00</strong></div>
-                </div>
-            </div>
-
-            <!-- Resumo e Compra -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
-                <h3 class="font-bold text-sm text-slate-200 mb-2 flex items-center justify-between">
-                    <span><i class="fa-solid fa-cart-shopping text-yellow-400"></i> Selecionados</span>
-                    <span id="qtd-selecionados" class="bg-yellow-400 text-slate-950 font-black text-xs px-2 py-0.5 rounded-full">0</span>
-                </h3>
-                <div id="lista-numeros-selecionados" class="text-xs text-slate-400 max-h-24 overflow-y-auto mb-3 flex flex-wrap gap-1">
-                    <span class="italic">Nenhum número escolhido</span>
-                </div>
-                
-                <div class="border-t border-slate-800 pt-3 flex justify-between items-center mb-4">
-                    <span class="font-semibold text-sm">Total:</span>
-                    <span id="valor-total" class="text-xl font-black text-green-400">R$ 0,00</span>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Seu WhatsApp (com DDD)</label>
+                    <input type="text" id="whatsapp" placeholder="Ex: 11967709999" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none">
                 </div>
 
-                <div class="space-y-2 mb-3">
-                    <input type="text" id="comprador-nome" placeholder="Seu Nome Completo" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-yellow-400">
-                    <input type="text" id="comprador-tel" placeholder="Seu WhatsApp (com DDD)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-yellow-400">
-                </div>
-
-                <button onclick="realizarReserva()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-slate-950 font-black py-3 px-4 rounded-xl shadow-lg transition uppercase tracking-wide text-xs flex items-center justify-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-base"></i> Reservar via WhatsApp
-                </button>
-            </div>
-        </div>
-
-        <!-- Coluna Direita: Grade de Números -->
-        <div class="md:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col">
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
-                <h2 class="text-lg font-bold text-yellow-400 flex items-center gap-2">
-                    <i class="fa-solid fa-list-ol"></i> Escolha seus Números
-                </h2>
-                <div class="flex items-center gap-3 text-[11px]">
-                    <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 bg-slate-800 border border-slate-700 rounded-sm"></span> Disponível</div>
-                    <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 bg-yellow-400 rounded-sm"></span> Selecionado</div>
-                    <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 bg-blue-600 rounded-sm"></span> Pago/Aprovado</div>
-                </div>
-            </div>
-
-            <div id="grid-numeros" class="grid grid-cols-5 sm:grid-cols-10 gap-2 overflow-y-auto max-h-[480px] p-2 bg-slate-950/60 rounded-xl border border-slate-800/80">
-                <!-- Gerado por Script -->
-            </div>
-        </div>
-    </main>
-
-    <!-- CONTEÚDO: PAINEL ADMINISTRADOR -->
-    <main id="aba-admin" class="max-w-4xl mx-auto p-4 md:p-6 hidden">
-        <div id="admin-login-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl max-w-md mx-auto mt-10">
-            <h2 class="text-xl font-bold text-yellow-400 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-lock"></i> Acesso Restrito ao Admin
-            </h2>
-            <p class="text-xs text-slate-400 mb-4">Insira a senha de administrador para gerenciar rifas e participantes.</p>
-            <input type="password" id="admin-senha" placeholder="Senha (padrão: 1234)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 mb-3 focus:outline-none focus:border-yellow-400">
-            <button onclick="tentarLogin()" class="w-full bg-yellow-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs uppercase shadow hover:bg-yellow-500 transition">Entrar</button>
-        </div>
-
-        <div id="admin-painel-box" class="space-y-6 hidden">
-            <!-- Configurações e Fotos -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
-                <h3 class="text-base font-bold text-yellow-400 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-gear"></i> Configurações da Rifa & Fotos
-                </h3>
-                <div class="space-y-3 text-xs">
-                    <div>
-                        <label class="block text-slate-400 mb-1">Título da Rifa:</label>
-                        <input type="text" id="input-edit-titulo" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-100">
+                <!-- Bloco Pix -->
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                    <p class="text-xs font-bold text-yellow-400 uppercase tracking-wider mb-1">Chave Pix (Telefone):</p>
+                    <div class="flex items-center justify-between bg-slate-900 px-3 py-2 rounded border border-slate-700">
+                        <span id="chave-pix-texto" class="text-sm font-mono text-yellow-300 select-all">11967709999</span>
+                        <button type="button" onclick="copiarChave()" class="text-xs bg-yellow-500 text-black font-bold px-3 py-1 rounded hover:bg-yellow-400 transition">Copiar</button>
                     </div>
-                    <div>
-                        <label class="block text-slate-400 mb-1">Links das Fotos (URLs separadas por vírgula):</label>
-                        <textarea id="input-edit-fotos" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 placeholder:text-slate-600" placeholder="https://exemplo.com/carro1.jpg, https://exemplo.com/carro2.jpg"></textarea>
-                    </div>
-                    <button onclick="salvarConfiguracoes()" class="bg-green-600 hover:bg-green-500 text-white font-bold px-4 py-2 rounded-xl uppercase transition">Salvar Alterações</button>
+                    <p class="text-[11px] text-slate-400 mt-2">Valor unitário da rifa. Realize o Pix e clique em enviar para validar.</p>
                 </div>
-            </div>
 
-            <!-- Lista de Participantes e Status -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
-                <h3 class="text-base font-bold text-yellow-400 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-users"></i> Participantes & Reservas
-                </h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead>
-                            <tr class="border-b border-slate-800 text-slate-400">
-                                <th class="py-2 px-3">Números</th>
-                                <th class="py-2 px-3">Participante</th>
-                                <th class="py-2 px-3">WhatsApp</th>
-                                <th class="py-2 px-3">Status</th>
-                                <th class="py-2 px-3 text-right">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabela-participantes">
-                            <!-- Preenchido via JS -->
-                        </tbody>
-                    </table>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="fecharModal()" class="w-1/2 bg-slate-800 text-slate-300 py-2 rounded-lg font-medium hover:bg-slate-700 transition">Cancelar</button>
+                    <button type="submit" class="w-1/2 bg-emerald-600 text-white font-bold py-2 rounded-lg hover:bg-emerald-700 transition">Enviar & WhatsApp</button>
                 </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Login Admin -->
+    <div id="modal-admin-login" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-slate-100">
+            <h3 class="text-lg font-bold mb-3 text-yellow-400">Acesso Restrito (Admin)</h3>
+            <p class="text-xs text-slate-400 mb-4">Insira a chave ou senha administrativa cadastrada para gerenciar os números e fotos.</p>
+            <input type="password" id="senha-admin" placeholder="Senha de acesso" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white mb-4 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+            <div class="flex gap-2">
+                <button onclick="fecharLoginAdmin()" class="w-1/2 bg-slate-800 text-slate-300 py-2 rounded-lg text-sm">Cancelar</button>
+                <button onclick="verificarAdmin()" class="w-1/2 bg-yellow-500 text-black font-bold py-2 rounded-lg text-sm hover:bg-yellow-400">Entrar</button>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Script de Gerenciamento -->
+    <!-- Modal Painel Administrativo -->
+    <div id="modal-admin-painel" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+                <h3 class="text-xl font-bold text-yellow-400">Painel de Gerenciamento - Saldão Minis</h3>
+                <button onclick="fecharPainelAdmin()" class="text-slate-400 hover:text-white font-bold text-lg">✕</button>
+            </div>
+
+            <!-- Seção de Gerenciamento das 5 Fotos -->
+            <div class="mb-6 bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <h4 class="text-sm font-bold text-yellow-400 mb-2">Gerenciar Links das 5 Fotos (Prêmio)</h4>
+                <div class="space-y-2">
+                    <input type="text" id="foto-url-1" placeholder="Link da Foto 1" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+                    <input type="text" id="foto-url-2" placeholder="Link da Foto 2" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+                    <input type="text" id="foto-url-3" placeholder="Link da Foto 3" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+                    <input type="text" id="foto-url-4" placeholder="Link da Foto 4" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+                    <input type="text" id="foto-url-5" placeholder="Link da Foto 5" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded text-xs text-white">
+                    <button onclick="salvarFotos()" class="mt-2 bg-yellow-500 text-black font-bold text-xs px-4 py-2 rounded hover:bg-yellow-400 transition">Atualizar Fotos na Vitrine</button>
+                </div>
+            </div>
+
+            <!-- Lista de Participantes e Números -->
+            <h4 class="text-sm font-bold text-slate-300 mb-2">Números Reservados / Preenchidos</h4>
+            <div id="lista-participantes" class="bg-slate-800 rounded-xl p-3 max-h-48 overflow-y-auto border border-slate-700 text-xs space-y-2 mb-4">
+                <!-- Preenchido via script -->
+            </div>
+
+            <div class="flex justify-between items-center pt-2 border-t border-slate-800">
+                <button onclick="zerarRifa()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition">Zerar / Nova Rifa</button>
+                <button onclick="fecharPainelAdmin()" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-xs">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-slate-900 text-slate-400 py-4 text-center text-xs border-t border-slate-800">
+        <p>Saldão Minis © 2026 — Todos os direitos reservados.</p>
+    </footer>
+
     <script>
-        let dadosRifa = JSON.parse(localStorage.getItem('saldao_rifa_dados')) || {
-            titulo: "Coleção Exclusiva Hot Wheels",
-            fotos: [
-                "https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=300&auto=format&fit=crop&q=60",
-                "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=300&auto=format&fit=crop&q=60"
-            ],
-            participantes: {} 
-        };
+        // CONFIGURAÇÕES DE CONTATO
+        const CHAVE_PIX = "11967709999"; 
+        const NUMERO_WHATSAPP = "5511967709999"; 
 
-        const selecionados = new Set();
+        // 5 OPÇÕES DE SENHAS / LINKS DE ACESSO DE ADMIN
+        const SENHAS_ADMIN = ["admin123", "saldão2026", "hotwheels99", "adminminis", "alanlima12"];
 
-        function mudarAba(aba) {
-            const elRifa = document.getElementById('aba-rifa');
-            const elAdmin = document.getElementById('aba-admin');
-            const btnRifa = document.getElementById('btn-tab-rifa');
-            const btnAdmin = document.getElementById('btn-tab-admin');
+        let numeroSelecionado = null;
+        let dadosRifa = JSON.parse(localStorage.getItem('rifa_saldao_dados')) || {};
+        let fotosPrêmio = JSON.parse(localStorage.getItem('rifa_saldao_fotos')) || [
+            "0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg",
+            "0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg",
+            "0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg",
+            "0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg",
+            "0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg"
+        ];
 
-            if (aba === 'rifa') {
-                elRifa.classList.remove('hidden');
-                elAdmin.classList.add('hidden');
-                btnRifa.className = "bg-yellow-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-xl text-xs uppercase shadow transition flex items-center gap-1.5";
-                btnAdmin.className = "bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold px-3.5 py-1.5 rounded-xl text-xs uppercase shadow transition flex items-center gap-1.5 border border-slate-700";
-                renderizarRifa();
-            } else {
-                elRifa.classList.add('hidden');
-                elAdmin.classList.remove('hidden');
-                btnAdmin.className = "bg-yellow-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-xl text-xs uppercase shadow transition flex items-center gap-1.5";
-                btnRifa.className = "bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold px-3.5 py-1.5 rounded-xl text-xs uppercase shadow transition flex items-center gap-1.5 border border-slate-700";
-            }
+        // Inicializar Fotos na Vitrine
+        function renderizarFotos() {
+            const container = document.getElementById('galeria-fotos');
+            container.innerHTML = '';
+            fotosPrêmio.forEach((url, index) => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-900 rounded-lg h-24 flex items-center justify-center border border-slate-700 overflow-hidden";
+                div.innerHTML = `<img src="${url || '0a5ca551-ac71-48de-b3f1-84da6e7c2a18.jpg'}" alt="Foto ${index+1}" class="w-full h-full object-cover">`;
+                container.appendChild(div);
+                
+                // Preencher inputs do admin se existirem
+                const input = document.getElementById(`foto-url-${index+1}`);
+                if (input) input.value = url;
+            });
         }
 
-        function tentarLogin() {
-            const senha = document.getElementById('admin-senha').value;
-            if (senha === "1234") {
-                document.getElementById('admin-login-box').classList.add('hidden');
-                document.getElementById('admin-painel-box').classList.remove('hidden');
-                document.getElementById('input-edit-titulo').value = dadosRifa.titulo;
-                document.getElementById('input-edit-fotos').value = dadosRifa.fotos.join(', ');
-                atualizarTabelaAdmin();
-            } else {
-                alert("Senha incorreta! Use 1234.");
-            }
-        }
-
-        function salvarConfiguracoes() {
-            dadosRifa.titulo = document.getElementById('input-edit-titulo').value;
-            const fotosStr = document.getElementById('input-edit-fotos').value;
-            dadosRifa.fotos = fotosStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
-            
-            localStorage.setItem('saldao_rifa_dados', JSON.stringify(dadosRifa));
-            alert("Configurações salvas com sucesso!");
-            renderizarRifa();
-        }
-
-        function renderizarRifa() {
-            document.getElementById('view-titulo').innerText = dadosRifa.titulo;
-
-            const fotosCont = document.getElementById('view-fotos-container');
-            fotosCont.innerHTML = dadosRifa.fotos.map(url => `
-                <div class="h-24 rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
-                    <img src="${url}" class="w-full h-full object-cover hover:scale-110 transition duration-300" onerror="this.src='https://via.placeholder.com/150?text=Hot+Wheels'">
-                </div>
-            `).join('') || '<span class="text-xs text-slate-500 italic col-span-2">Nenhuma foto cadastrada</span>';
-
-            const grid = document.getElementById('grid-numeros');
+        // Gerar Grade de 1 a 100
+        const grid = document.getElementById('grid-numeros');
+        function renderizarGrid() {
             grid.innerHTML = '';
-
-            for (let i = 1; i <= CONFIG.totalNumeros; i++) {
+            for (let i = 1; i <= 100; i++) {
                 const btn = document.createElement('button');
-                btn.innerText = i;
-                btn.className = "h-10 rounded-lg font-bold text-xs transition flex items-center justify-center shadow-sm";
-
-                const part = dadosRifa.participantes[i];
-                if (part) {
-                    if (part.status === 'aprovado') {
-                        btn.classList.add('bg-blue-600', 'text-white', 'cursor-not-allowed', 'border', 'border-blue-500');
-                        btn.disabled = true;
-                    } else {
-                        btn.classList.add('bg-amber-600/70', 'text-amber-200', 'border', 'border-amber-500');
-                        btn.onclick = () => alternarSelecao(i, btn);
-                    }
+                btn.type = 'button';
+                const numStr = i < 10 ? '0' + i : '' + i;
+                btn.innerText = numStr;
+                
+                if (dadosRifa[i]) {
+                    // Ocupado
+                    btn.className = "numero-btn py-3 rounded-lg font-bold text-xs bg-rose-600 text-white cursor-not-allowed opacity-90 shadow-inner";
+                    btn.title = `Ocupado por: ${dadosRifa[i].nome}`;
+                    btn.disabled = true;
                 } else {
-                    if (selecionados.has(i)) {
-                        btn.classList.add('bg-yellow-400', 'text-slate-950', 'border', 'border-yellow-500', 'scale-105');
-                    } else {
-                        btn.classList.add('bg-slate-800', 'hover:bg-slate-700', 'text-slate-200', 'border', 'border-slate-700');
-                    }
-                    btn.onclick = () => alternarSelecao(i, btn);
+                    // Disponível
+                    btn.className = "numero-btn py-3 rounded-lg font-bold text-xs bg-emerald-600 text-white hover:bg-emerald-500 shadow transition";
+                    btn.onclick = () => abrirModal(i);
                 }
                 grid.appendChild(btn);
             }
         }
 
-        function alternarSelecao(num, elemento) {
-            if (selecionados.has(num)) {
-                selecionados.delete(num);
-            } else {
-                selecionados.add(num);
-            }
-            renderizarRifa();
-            atualizarResumo();
+        function abrirModal(num) {
+            numeroSelecionado = num;
+            document.getElementById('modal-num').innerText = num < 10 ? '0' + num : num;
+            document.getElementById('modal').classList.remove('hidden');
         }
 
-        function calcularTotal(qtd) {
-            if (qtd <= 0) return 0;
-            const pacotes = Math.floor(qtd / CONFIG.qtdPacote);
-            const resto = qtd % CONFIG.qtdPacote;
-            return (pacotes * CONFIG.precoPacote) + (resto * CONFIG.precoUnitario);
+        function fecharModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('form-participante').reset();
         }
 
-        function atualizarResumo() {
-            const qtd = selecionados.size;
-            document.getElementById('qtd-selecionados').innerText = qtd;
+        function copiarChave() {
+            navigator.clipboard.writeText(CHAVE_PIX);
+            alert("Chave Pix copiada com sucesso!");
+        }
+
+        // Envio do Participante
+        document.getElementById('form-participante').onsubmit = function(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+
+            // Salvar localmente
+            dadosRifa[numeroSelecionado] = { nome, whatsapp, data: new Date().toLocaleDateString() };
+            localStorage.setItem('rifa_saldao_dados', JSON.stringify(dadosRifa));
+
+            // Redirecionar WhatsApp
+            const numFmt = numeroSelecionado < 10 ? '0' + numeroSelecionado : numeroSelecionado;
+            const mensagem = encodeURIComponent(`Olá! Escolhi o número *${numFmt}* na rifa do Saldão Minis. Meu nome é ${nome}. Segue o comprovante de pagamento:`);
+            const linkWhats = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensagem}`;
+
+            alert("Número reservado com sucesso! Redirecionando para enviar o comprovante no WhatsApp...");
+            window.open(linkWhats, '_blank');
             
-            const listaDiv = document.getElementById('lista-numeros-selecionados');
-            if (qtd === 0) {
-                listaDiv.innerHTML = '<span class="italic text-slate-500">Nenhum número escolhido</span>';
+            fecharModal();
+            renderizarGrid();
+        };
+
+        // Funções Admin
+        function abrirLoginAdmin() {
+            document.getElementById('modal-admin-login').classList.remove('hidden');
+        }
+        function fecharLoginAdmin() {
+            document.getElementById('modal-admin-login').classList.add('hidden');
+            document.getElementById('senha-admin').value = '';
+        }
+        function verificarAdmin() {
+            const senha = document.getElementById('senha-admin').value;
+            if (SENHAS_ADMIN.includes(senha)) {
+                fecharLoginAdmin();
+                abrirPainelAdmin();
             } else {
-                const ordenados = Array.from(selecionados).sort((a, b) => a - b);
-                listaDiv.innerHTML = ordenados.map(n => `<span class="bg-slate-950 border border-slate-800 px-1.5 py-0.5 rounded font-mono text-yellow-300">${n}</span>`).join(' ');
+                alert("Senha ou link de acesso administrativo inválido!");
             }
-
-            const total = calcularTotal(qtd);
-            document.getElementById('valor-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+        function abrirPainelAdmin() {
+            carregarListaAdmin();
+            document.getElementById('modal-admin-painel').classList.remove('hidden');
+        }
+        function fecharPainelAdmin() {
+            document.getElementById('modal-admin-painel').classList.add('hidden');
         }
 
-        function realizarReserva() {
-            const qtd = selecionados.size;
-            const nome = document.getElementById('comprador-nome').value.trim();
-            const tel = document.getElementById('comprador-tel').value.trim();
-
-            if (qtd === 0) {
-                alert('Selecione ao menos um número.');
-                return;
-            }
-            if (!nome || !tel) {
-                alert('Preencha seu Nome e WhatsApp.');
-                return;
-            }
-
-            const ordenados = Array.from(selecionados).sort((a, b) => a - b);
-            const total = calcularTotal(qtd);
-
-            ordenados.forEach(num => {
-                dadosRifa.participantes[num] = { nome, tel, status: 'pendente' };
-            });
-
-            localStorage.setItem('saldao_rifa_dados', JSON.stringify(dadosRifa));
-
-            const msg = `Olá! Me chamo *${nome}* e gostaria de reservar os números: *${ordenados.join(', ')}* na rifa *${dadosRifa.titulo}*.\nTotal: R$ ${total.toFixed(2).replace('.', ',')}. Segue o comprovante!`;
-            window.open(`https://api.whatsapp.com/send?phone=${CONFIG.whatsappContato}&text=${encodeURIComponent(msg)}`, '_blank');
-
-            selecionados.clear();
-            renderizarRifa();
-            atualizarResumo();
-        }
-
-        function atualizarTabelaAdmin() {
-            const tbody = document.getElementById('tabela-participantes');
-            const participantes = dadosRifa.participantes;
-            
-            const agrupados = {};
-            for (let num in participantes) {
-                const p = participantes[num];
-                const key = p.nome + "_" + p.tel;
-                if (!agrupados[key]) {
-                    agrupados[key] = { nome: p.nome, tel: p.tel, numeros: [], status: p.status };
-                }
-                agrupados[key].numeros.push(num);
-            }
-
-            const chaves = Object.keys(agrupados);
+        function carregarListaAdmin() {
+            const container = document.getElementById('lista-participantes');
+            container.innerHTML = '';
+            const chaves = Object.keys(dadosRifa);
             if (chaves.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">Nenhum participante registrado ainda.</td></tr>`;
+                container.innerHTML = '<p class="text-slate-400 text-center py-2">Nenhum número preenchido até o momento.</p>';
                 return;
             }
-
-            tbody.innerHTML = chaves.map(k => {
-                const item = agrupados[k];
-                const numsStr = item.numeros.sort((a,b)=>a-b).join(', ');
-                const isAprovado = item.status === 'aprovado';
-                return `
-                    <tr class="border-b border-slate-800">
-                        <td class="py-3 px-3 font-mono text-yellow-400">${numsStr}</td>
-                        <td class="py-3 px-3">${item.nome}</td>
-                        <td class="py-3 px-3">${item.tel}</td>
-                        <td class="py-3 px-3">
-                            <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold ${isAprovado ? 'bg-blue-900/60 text-blue-300 border border-blue-700' : 'bg-amber-900/60 text-amber-300 border border-amber-700'}">
-                                ${item.status}
-                            </span>
-                        </td>
-                        <td class="py-3 px-3 text-right">
-                            <button onclick="mudarStatusGrupo('${item.numeros.join(',')}', '${isAprovado ? 'pendente' : 'aprovado'})" class="px-2 py-1 rounded text-[11px] font-bold ${isAprovado ? 'bg-amber-700 hover:bg-amber-600 text-white' : 'bg-blue-600 hover:bg-blue-500 text-white'} transition">
-                                ${isAprovado ? 'Liberar' : 'Aprovar'}
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function mudarStatusGrupo(numsStr, novoStatus) {
-            const nums = numsStr.split(',');
-            nums.forEach(num => {
-                if (dadosRifa.participantes[num]) {
-                    if (novoStatus === 'pendente') {
-                        delete dadosRifa.participantes[num];
-                    } else {
-                        dadosRifa.participantes[num].status = novoStatus;
-                    }
-                }
+            chaves.forEach(num => {
+                const item = dadosRifa[num];
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center bg-slate-900 p-2 rounded border border-slate-700";
+                div.innerHTML = `<span><strong>Nº ${num}</strong> - ${item.nome} (${item.whatsapp})</span>
+                                 <button onclick="liberarNumero(${num})" class="text-rose-400 hover:text-rose-300 font-bold">Liberar</button>`;
+                container.appendChild(div);
             });
-            localStorage.setItem('saldao_rifa_dados', JSON.stringify(dadosRifa));
-            atualizarTabelaAdmin();
-            renderizarRifa();
         }
 
-        window.onload = renderizarRifa;
+        function liberarNumero(num) {
+            if (confirm(`Deseja liberar o número ${num} novamente?`)) {
+                delete dadosRifa[num];
+                localStorage.setItem('rifa_saldao_dados', JSON.stringify(dadosRifa));
+                carregarListaAdmin();
+                renderizarGrid();
+            }
+        }
+
+        function salvarFotos() {
+            fotosPrêmio = [
+                document.getElementById('foto-url-1').value,
+                document.getElementById('foto-url-2').value,
+                document.getElementById('foto-url-3').value,
+                document.getElementById('foto-url-4').value,
+                document.getElementById('foto-url-5').value
+            ];
+            localStorage.setItem('rifa_saldao_fotos', JSON.stringify(fotosPrêmio));
+            renderizarFotos();
+            alert("Fotos da vitrine atualizadas com sucesso!");
+        }
+
+        function zerarRifa() {
+            if (confirm("ATENÇÃO: Isso vai limpar TODOS os números vendidos e reiniciar a rifa para uma nova rodada. Deseja continuar?")) {
+                dadosRifa = {};
+                localStorage.removeItem('rifa_saldao_dados');
+                renderizarGrid();
+                carregarListaAdmin();
+                alert("Rifa zerada com sucesso! Pronta para uma nova rodada.");
+                fecharPainelAdmin();
+            }
+        }
+
+        // Executar inicialização
+        renderizarFotos();
+        renderizarGrid();
     </script>
 </body>
 </html>
