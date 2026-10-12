@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saldão Minis | Sorteio Administrativo</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#edf4ff;background:#0b1425}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#243f67,#0b1425 60%)}main{max-width:740px;margin:0 auto;padding:36px 18px}.brand{text-align:center;letter-spacing:.12em;color:#ffca44;font-weight:800}.panel{background:#14243b;border:1px solid #344a67;border-radius:20px;padding:24px;margin:22px 0;box-shadow:0 12px 32px #0004}h1{text-align:center;margin:8px 0}h2{margin:0 0 12px;font-size:1.15rem}p,.muted{color:#b5c6df}label{display:block;margin:14px 0 5px}input{width:100%;padding:13px;border:1px solid #5b7293;background:#0c182a;color:white;border-radius:9px;font-size:1rem}button{background:#ffcb45;color:#16223a;border:0;border-radius:10px;padding:13px 18px;font-size:1rem;font-weight:800;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#314b6d;color:white}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.num{font-size:clamp(5rem,20vw,9rem);font-weight:900;text-align:center;color:#ffcf4c;line-height:1.2;padding:18px}.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:14px}.cell{background:#243c5b;border-radius:7px;text-align:center;padding:8px 0;font-size:.8rem;color:#dce9fb}.msg{min-height:24px;color:#f8d67b;margin-top:12px}.winner-name{text-align:center;font-size:clamp(1.35rem,4vw,2rem);font-weight:800;color:#fff;margin:8px 0 16px;min-height:2.2rem}.roulette{border:2px solid #ffcb45;border-radius:18px;background:linear-gradient(135deg,#203d63,#0e1b31);box-shadow:0 0 35px #ffcb4533;overflow:hidden}.roulette.spinning{animation:pulse .32s ease-in-out infinite alternate}@keyframes pulse{to{box-shadow:0 0 45px #ffcb45aa;transform:scale(1.015)}}.hide{display:none}small{color:#a7bbd5}@media(max-width:520px){.grid{grid-template-columns:repeat(5,1fr)}}
+</style></head><body><main><div class="brand">🏎️ SALDÃO MINIS</div><h1>🏆 Sorteio Oficial</h1><p style="text-align:center">Somente números com pagamento confirmado no Supabase.</p>
+<section class="panel" id="login"><h2>Entrar como administrador</h2><label for="email">E-mail</label><input id="email" type="email" autocomplete="username"><label for="password">Senha</label><input id="password" type="password" autocomplete="current-password"><div class="actions"><button id="signin">Entrar</button></div><p class="msg" id="loginmsg" role="status"></p></section>
+<section class="panel hide" id="app"><div class="actions" style="justify-content:space-between;align-items:center"><h2>Painel do sorteio</h2><button class="secondary" id="signout">Sair</button></div><p><strong id="count">—</strong> números pagos estão habilitados para o sorteio.</p><div class="grid" id="numbers"></div><div class="roulette" id="roulette"><div class="num" id="winner">??</div></div><p style="text-align:center" id="resultlabel">Aguardando sorteio</p><div class="winner-name" id="winnername" aria-live="polite"></div><div class="actions"><button class="secondary" id="refresh">Atualizar números pagos</button><button id="draw" disabled>Sortear vencedor</button></div><p class="msg" id="appmsg" role="status"></p><small>O sorteio é único e seu resultado é salvo no Supabase. Não divulgue esta página como acesso público ao painel administrativo.</small></section>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+'use strict';
+const client=window.supabase.createClient('https://fornxphycykjadlqsbag.supabase.co','sb_publishable_vRXiM8gciZh5p_T0Bt7nkg_4pdVLQmM');
+const $=id=>document.getElementById(id);let eligible=[];let alreadyDrawn=false;let spinning=false;const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function err(e){return e?.message||String(e)}
+async function load(){
+ $('appmsg').textContent='Consultando números pagos…';
+ const [nums,res]=await Promise.all([client.rpc('rifa_numeros_pagos'),client.rpc('rifa_resultado_sorteio')]);
+ if(nums.error)throw nums.error;if(res.error)throw res.error;
+ eligible=(nums.data||[]).map(x=>Number(x.numero));alreadyDrawn=Boolean(res.data?.length);
+ $('count').textContent=eligible.length;
+ $('numbers').replaceChildren(...eligible.map(n=>{const el=document.createElement('div');el.className='cell';el.textContent=String(n).padStart(2,'0');return el;}));
+ $('draw').disabled=spinning||alreadyDrawn||eligible.length===0;
+ if(alreadyDrawn){$('winner').textContent=String(res.data[0].numero_vencedor).padStart(2,'0');$('resultlabel').textContent='🏆 Número vencedor';$('winnername').textContent=res.data[0].nome_vencedor||'Nome não encontrado';}
+ else {$('winner').textContent='??';$('resultlabel').textContent='Aguardando sorteio';$('winnername').textContent='';}
+ $('appmsg').textContent=alreadyDrawn?'O sorteio já foi realizado.':'Confira os pagamentos antes de sortear.';
+}
+$('signin').addEventListener('click',async()=>{const b=$('signin');b.disabled=true;$('loginmsg').textContent='Entrando…';try{const {error}=await client.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;const check=await client.rpc('rifa_e_admin');if(check.error)throw check.error;if(check.data!==true)throw new Error('Esta conta não tem permissão de administrador.');$('login').classList.add('hide');$('app').classList.remove('hide');await load();}catch(e){$('loginmsg').textContent=err(e);await client.auth.signOut();$('app').classList.add('hide');$('login').classList.remove('hide');}finally{b.disabled=false;}});
+$('refresh').addEventListener('click',async()=>{try{await load()}catch(e){$('appmsg').textContent=err(e)}});
+$('draw').addEventListener('click',async()=>{
+ if(spinning||alreadyDrawn||!eligible.length)return;
+ if(!confirm('ATENÇÃO: o sorteio será DEFINITIVO e registrado no Supabase. Todos os pagamentos já foram confirmados?'))return;
+ spinning=true;$('draw').disabled=true;$('refresh').disabled=true;
+ $('appmsg').textContent='Registrando o sorteio no Supabase…';
+ try{
+   // Primeiro registra o resultado definitivo no servidor; só depois inicia a animação.
+   const {data,error}=await client.rpc('rifa_realizar_sorteio');
+   if(error)throw error;
+   const numero=Number(data);
+   const result=await client.rpc('rifa_resultado_sorteio');
+   if(result.error)throw result.error;
+   const registrado=(result.data||[])[0];
+   if(!registrado||Number(registrado.numero_vencedor)!==numero)throw new Error('Resultado registrado, mas não foi possível confirmar o vencedor. Atualize a página.');
+   alreadyDrawn=true;$('winnername').textContent='';$('resultlabel').textContent='A roleta está girando…';
+   $('roulette').classList.add('spinning');
+   $('appmsg').textContent='Sorteio registrado! Revelando o vencedor…';
+   const inicio=performance.now();
+   while(performance.now()-inicio<4200){
+     const indice=Math.floor(Math.random()*eligible.length);
+     $('winner').textContent=String(eligible[indice]).padStart(2,'0');
+     await sleep(65+Math.floor((performance.now()-inicio)/30));
+   }
+   $('roulette').classList.remove('spinning');
+   $('winner').textContent=String(numero).padStart(2,'0');
+   $('resultlabel').textContent='🏆 Número vencedor';
+   $('winnername').textContent=registrado.nome_vencedor||'Nome não encontrado';
+   $('appmsg').textContent='Resultado confirmado e salvo no Supabase.';
+ }catch(e){$('roulette').classList.remove('spinning');$('appmsg').textContent=err(e)+' — use Atualizar números pagos para consultar o resultado.';}
+ finally{spinning=false;$('refresh').disabled=false;await load().catch(()=>{});}
+});
+$('signout').addEventListener('click',async()=>{await client.auth.signOut();$('app').classList.add('hide');$('login').classList.remove('hide');$('password').value='';});
+</script></body></html>
